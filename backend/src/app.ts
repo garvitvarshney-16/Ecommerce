@@ -9,6 +9,7 @@ import dasboardRoute from "./routes/stats.js";
 import NodeCache from "node-cache";
 import { config } from "dotenv"
 import morgan from "morgan";
+import Stripe from "stripe";
 
 config({
     path: "./.env",
@@ -16,9 +17,11 @@ config({
 
 const PORT = process.env.PORT || 4000;
 const mongoURI = process.env.MONGO_URI || "";
+const stripekey = process.env.STRIPE_KEY|| "";
 
 connectDB(mongoURI);
 
+export const stripe = new Stripe(stripekey)
 export const myCache = new NodeCache();
 
 const app = Express();

@@ -96,7 +96,7 @@ export const newOrder = TryCatch(async (req, res, next) => {
 
     await reduceStock(orderItems);
 
-    await invalidatesCache({ product: true, order: true, admin: true, userId: user, productId: order.orderItems.map((i) => String(i.productId)) })
+    invalidatesCache({ product: true, order: true, admin: true, userId: user, productId: order.orderItems.map((i) => String(i.productId)) })
 
     return res.status(201).json({
         success: true,
@@ -127,7 +127,7 @@ export const processOrder = TryCatch(async (req, res, next) => {
 
     await order.save();
 
-    await invalidatesCache({ product: false, order: true, admin: true, userId: order.user, orderId: String(order._id) });
+    invalidatesCache({ product: false, order: true, admin: true, userId: order.user, orderId: String(order._id) });
 
     return res.status(200).json({
         success: true,
@@ -147,7 +147,7 @@ export const deleteOrder = TryCatch(async (req, res, next) => {
 
     await order.deleteOne();
 
-    await invalidatesCache({ product: false, order: true, admin: true, userId: order.user, orderId: String(order._id) });
+    invalidatesCache({ product: false, order: true, admin: true, userId: order.user, orderId: String(order._id) });
 
     return res.status(200).json({
         success: true,
