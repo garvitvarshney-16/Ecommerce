@@ -1,33 +1,49 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import ProductCard from '../components/ProductCard'
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+import Loader, { Skeleton } from "../components/Loader";
+import ProductCard from "../components/ProductCard";
+import { useLatestProductsQuery } from "../redux/api/productApi";
 
 const Home = () => {
-  const addToCartHandler = () => { };
+  const { data, isLoading, isError } = useLatestProductsQuery("");
+
+  const addToCartHandler = () => {};
+
+  if (isError) {
+    toast.error("Cannot Fetch the Products");
+  }
 
   return (
-    <div className='home'>
+    <div className="home">
       <section></section>
 
       <h1>
         Latest Products
-        <Link to={"/search"} className='findmore'>
+        <Link to={"/search"} className="findmore">
           More
         </Link>
       </h1>
 
       <main>
-        <ProductCard
-          productId='ass'
-          name='Mac'
-          price={50000}
-          stock={59}
-          handler={addToCartHandler}
-          photo='https://m.media-amazon.com/images/W/MEDIAX_792452-T1/images/I/81Fm0tRFdHL._AC_UY327_FMwebp_QL65_.jpg'
-        />
+      <Skeleton />
+        {isLoading ? (
+          <Loader/>
+        ) : (
+          data?.products.map((i) => (
+            <ProductCard
+              key={i._id}
+              productId={i._id}
+              name={i.name}
+              price={i.price}
+              stock={i.stock}
+              handler={addToCartHandler}
+              photo={i.photo}
+            />
+          ))
+        )}
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

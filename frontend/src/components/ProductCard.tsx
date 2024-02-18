@@ -9,15 +9,13 @@ type ProductProps = {
     handler: () => void;
 };
 
-const server = "dfudfufg";
-
 const ProductCard = ({ productId, photo, name, price, stock, handler }: ProductProps) => {
     return (
         <div className="productcard">
-            <img src={photo} alt={name} />
+            <img src={`${import.meta.env.VITE_SERVER}/${photo}`} alt={name} />
             <p>{name}</p>
             <span>₹{price}</span>
-
+ 
             <div>
                 <button onClick={() => handler()}>
                     <FaPlus />
