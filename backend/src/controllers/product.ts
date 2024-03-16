@@ -21,8 +21,6 @@ export const getLatestProducts = TryCatch(async (req, res, next) => {
         myCache.set("latest-products", JSON.stringify(products))
     }
 
-    throw new Error("hw")
-
     return res.status(200).json({
         success: true,
         products,
@@ -164,7 +162,7 @@ export const deleteProduct = TryCatch(async (req, res, next) => {
         console.log("Product photo deleted");
     });
 
-    await Product.deleteOne();
+    await product.deleteOne();
 
     invalidatesCache({product: true, productId: String(product._id), admin: true})
 

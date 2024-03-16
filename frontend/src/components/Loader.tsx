@@ -8,12 +8,19 @@ const Loader = () => {
 
 export default Loader
 
-export const Skeleton = () => {
+interface SkeletonProps {
+  width?: string;
+  length?: number;
+}
+
+export const Skeleton = ({ width = "unset", length = 3} : SkeletonProps) => {
+
+  const skeletons = Array.from({length}, (_, idx) => (
+    <div key={idx} className="skeleton-shape"></div>
+  ))
   return (
-    <div className="skeleton-loader">
-      <div className="skeleton-loader">dd</div>
-      <div className="skeleton-loader"></div>
-      <div className="skeleton-loader"></div>
+    <div className="skeleton-loader" style={{width}}>
+      {skeletons}
     </div>
   )
 }

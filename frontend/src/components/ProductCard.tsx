@@ -1,4 +1,5 @@
 import { FaPlus } from "react-icons/fa";
+import { CartItem } from "../types/types";
 
 type ProductProps = {
     productId: string;
@@ -6,7 +7,7 @@ type ProductProps = {
     name: string;
     price: number;
     stock: number;
-    handler: () => void;
+    handler:  (cartItem: CartItem) => string | undefined;
 };
 
 const ProductCard = ({ productId, photo, name, price, stock, handler }: ProductProps) => {
@@ -17,7 +18,7 @@ const ProductCard = ({ productId, photo, name, price, stock, handler }: ProductP
             <span>₹{price}</span>
  
             <div>
-                <button onClick={() => handler()}>
+                <button onClick={() => handler({productId, price, name, photo, stock, quantity: 1})}>
                     <FaPlus />
                 </button>
             </div>
